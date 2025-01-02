@@ -54,32 +54,33 @@
         <input type="range" id="slider" min="1" max="20" value="1" step="1">
     </div>
 
-    <!-- 初始化翻頁與滑動條 -->
+   <!-- 動態調整翻頁容器大小 -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const flipbook = $("#flipbook");
+            const adjustFlipbookSize = () => {
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+
+                // 設定翻頁容器的大小
+                const flipbookWidth = Math.min(screenWidth * 0.9, 800); // 最大寬度限制為 800px
+                const flipbookHeight = Math.min(screenHeight * 0.75, 600); // 最大高度限制為 600px
+
+                flipbook.turn("size", flipbookWidth, flipbookHeight);
+            };
+
             // 初始化 turn.js
-            const flipbook = $("#flipbook").turn({
-                width: 800,
-                height: 600,
-                autoCenter: true
+            flipbook.turn({
+                width: 800, // 初始寬度
+                height: 600, // 初始高度
+                autoCenter: true,
             });
 
-            // 初始化滑動條
-            const slider = document.getElementById("slider");
+            // 首次加載時調整大小
+            adjustFlipbookSize();
 
-            // 更新 slider 最大值為頁面數量
-            slider.max = flipbook.turn("pages");
-
-            // 當滑動條改變時翻頁
-            slider.addEventListener("input", function () {
-                const page = parseInt(slider.value, 10);
-                flipbook.turn("page", page);
-            });
-
-            // 當翻頁時更新滑動條的位置
-            flipbook.on("turning", function (event, page) {
-                slider.value = page;
-            });
+            // 當視窗大小變化時自動調整
+            window.addEventListener("resize", adjustFlipbookSize);
         });
     </script>
 </body>
