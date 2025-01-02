@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipbook with Slider</title>
+    <!-- 引用 CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 引用 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 引用 turn.js -->
+    <script src="js/turn.js-master/turn.js"></script>
+    <style>
+        /* 調整翻頁區域與 slider 的樣式 */
+        #flipbook {
+            margin: 0 auto;
+        }
+        #slider-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #slider {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="flipbook">
+        <div class="page"><img src="img/2025台銀型錄-機器版本_01.jpg" alt="Page 1"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_02.jpg" alt="Page 2"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_03.jpg" alt="Page 3"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_04.jpg" alt="Page 4"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_05.jpg" alt="Page 5"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_06.jpg" alt="Page 6"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_07.jpg" alt="Page 7"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_08.jpg" alt="Page 8"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_09.jpg" alt="Page 9"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_10.jpg" alt="Page 10"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_11.jpg" alt="Page 11"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_12.jpg" alt="Page 12"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_13.jpg" alt="Page 13"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_14.jpg" alt="Page 14"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_15.jpg" alt="Page 15"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_16.jpg" alt="Page 16"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_17.jpg" alt="Page 17"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_18.jpg" alt="Page 18"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_19.jpg" alt="Page 19"></div>
+        <div class="page"><img src="img/2025台銀型錄-機器版本_20.jpg" alt="Page 20"></div>
+    </div>
+
+    <!-- 滑動條容器 -->
+    <div id="slider-container">
+        <input type="range" id="slider" min="1" max="20" value="1" step="1">
+    </div>
+
+    <!-- 初始化翻頁與滑動條 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 初始化 turn.js
+            const flipbook = $("#flipbook").turn({
+                width: 800,
+                height: 600,
+                autoCenter: true
+            });
+
+            // 初始化滑動條
+            const slider = document.getElementById("slider");
+
+            // 更新 slider 最大值為頁面數量
+            slider.max = flipbook.turn("pages");
+
+            // 當滑動條改變時翻頁
+            slider.addEventListener("input", function () {
+                const page = parseInt(slider.value, 10);
+                flipbook.turn("page", page);
+            });
+
+            // 當翻頁時更新滑動條的位置
+            flipbook.on("turning", function (event, page) {
+                slider.value = page;
+            });
+        });
+    </script>
+</body>
+</html>
